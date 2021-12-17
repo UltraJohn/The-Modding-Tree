@@ -7,12 +7,16 @@ addLayer("training", {
 		points: new Decimal(0),
     }},
     color: "#4BDC13",
-    requires: new Decimal(1), // Can be a function that takes requirement increases into account
+    requires(){
+        return new Decimal(5)
+    }, // Can be a function that takes requirement increases into account
     resource: "Training", // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.5, // Prestige currency exponent
+    exponent(){
+        return new Decimal(1)
+    }, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         let mult = new Decimal(1)
         if (hasUpgrade('training', 13)) mult = mult.times(upgradeEffect('training', 13))
@@ -21,7 +25,7 @@ addLayer("training", {
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
-    row: 0, // Row the layer is in on the tree (0 is the first row)
+    row: 1, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
         {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
@@ -50,5 +54,31 @@ addLayer("training", {
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         }
+    },
+    
+    tabFormat: {
+        "main" : {
+            
+
+                content: 
+                    ["main-display",
+                    "prestige-button", "resource-display",
+                    ["bar", "bigBar"],
+                    ["blank", "20px"], // Height
+                    
+
+                    "h-line", "milestones", "blank", "upgrades", "challenges"],
+                glowColor: "blue",
+        }
+    },
+    bars: {
+        bigBar: {
+            direction: RIGHT,
+            width: 200,
+            height: 50,
+            progress() { return 0.5 },
+            unlocked(){return true}
+            
+        },
     }
 })

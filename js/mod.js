@@ -1,9 +1,9 @@
 let modInfo = {
-	name: "The Test Tree",
+	name: "Dragon ball",
 	id: "mymod",
 	author: "nobody",
 	pointsName: "Power level",
-	modFiles: ["layers.js", "tree.js"],
+	modFiles: ["layers.js", "tree.js", "dbs_layer.js"],
 
 	discordName: "",
 	discordLink: "",
